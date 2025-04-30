@@ -1,59 +1,22 @@
 #include <iostream>
-#include <string>
+#include <iomanip>
 using namespace std;
 
-// Function to get validated accident input
-int getAccidents(string regionName) {
-    int accidents;
-    do {
-        cout << "Enter number of reported accidents in the " << regionName << " region: ";
-        cin >> accidents;
-        if (accidents < 0)
-            cout << "Error: Number of accidents cannot be negative. Please try again.\n";
-    } while (accidents < 0);
-    return accidents;
+// Function to convert Fahrenheit to Celsius
+double fahrenheitToCelsius(int fahrenheit) {
+    return (5.0 / 9.0) * (fahrenheit - 32);
 }
 
-// Function to find the region with the fewest accidents
-string findLowest(int north, int south, int east, int west, int central) {
-    int lowest = north;
-    string region = "North";
-
-    if (south < lowest) {
-        lowest = south;
-        region = "South";
-    }
-    if (east < lowest) {
-        lowest = east;
-        region = "East";
-    }
-    if (west < lowest) {
-        lowest = west;
-        region = "West";
-    }
-    if (central < lowest) {
-        lowest = central;
-        region = "Central";
-    }
-
-    return region;
-}
-
+// Main function to display the table
 int main() {
-    cout << "=== Safest Driving Area Program ===\n";
+    cout << "=== Fahrenheit to Celsius Conversion Table ===\n\n";
+    cout << left << setw(15) << "Fahrenheit" << "Celsius\n";
+    cout << "-----------------------------\n";
 
-    // Collect accident data
-    int north = getAccidents("North");
-    int south = getAccidents("South");
-    int east = getAccidents("East");
-    int west = getAccidents("West");
-    int central = getAccidents("Central");
-
-    // Determine region with fewest accidents
-    string safestRegion = findLowest(north, south, east, west, central);
-
-    // Display result
-    cout << "\nThe region with the fewest accidents last year was: " << safestRegion << endl;
+    for (int f = 0; f <= 20; f++) {
+        double celsius = fahrenheitToCelsius(f);
+        cout << left << setw(15) << f << fixed << setprecision(2) << celsius << endl;
+    }
 
     return 0;
 }
