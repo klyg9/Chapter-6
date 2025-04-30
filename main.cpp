@@ -1,54 +1,59 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-// Function to get a validated positive number
-double getPositiveInput(string prompt) {
-    double value;
+// Function to get validated accident input
+int getAccidents(string regionName) {
+    int accidents;
     do {
-        cout << prompt;
-        cin >> value;
-        if (value < 0)
-            cout << "Input cannot be negative. Please try again.\n";
-    } while (value < 0);
-    return value;
+        cout << "Enter number of reported accidents in the " << regionName << " region: ";
+        cin >> accidents;
+        if (accidents < 0)
+            cout << "Error: Number of accidents cannot be negative. Please try again.\n";
+    } while (accidents < 0);
+    return accidents;
 }
 
-// Function to calculate area
-double calculateArea(double length, double width) {
-    return length * width;
+// Function to find the region with the fewest accidents
+string findLowest(int north, int south, int east, int west, int central) {
+    int lowest = north;
+    string region = "North";
+
+    if (south < lowest) {
+        lowest = south;
+        region = "South";
+    }
+    if (east < lowest) {
+        lowest = east;
+        region = "East";
+    }
+    if (west < lowest) {
+        lowest = west;
+        region = "West";
+    }
+    if (central < lowest) {
+        lowest = central;
+        region = "Central";
+    }
+
+    return region;
 }
 
-// Function to calculate perimeter
-double calculatePerimeter(double length, double width) {
-    return 2 * (length + width);
-}
-
-// Function to ask user if they want to continue
-bool userWantsToContinue() {
-    char choice;
-    cout << "Would you like to process another rectangle? (Y/N): ";
-    cin >> choice;
-    return (choice == 'Y' || choice == 'y');
-}
-
-// Main program
 int main() {
-    cout << "=== Rectangle Properties Calculator ===\n";
+    cout << "=== Safest Driving Area Program ===\n";
 
-    do {
-        // Get valid inputs
-        double length = getPositiveInput("Enter the length: ");
-        double width = getPositiveInput("Enter the width: ");
+    // Collect accident data
+    int north = getAccidents("North");
+    int south = getAccidents("South");
+    int east = getAccidents("East");
+    int west = getAccidents("West");
+    int central = getAccidents("Central");
 
-        // Compute and display results
-        double area = calculateArea(length, width);
-        double perimeter = calculatePerimeter(length, width);
+    // Determine region with fewest accidents
+    string safestRegion = findLowest(north, south, east, west, central);
 
-        cout << "Area: " << area << endl;
-        cout << "Perimeter: " << perimeter << endl;
+    // Display result
+    cout << "\nThe region with the fewest accidents last year was: " << safestRegion << endl;
 
-    } while (userWantsToContinue());
-
-    cout << "Thank you for using the Rectangle Calculator!\n";
     return 0;
 }
